@@ -3,6 +3,8 @@ import state.VoiceAppStateHandler;
 
 import java.util.Scanner;
 
+//TODO Fråga Johnny om vi får använda koden från Caller-klassen
+//TODO Fråga om vi ska ha en eller flera inSession-klasser och om samtalsinitieringen är lika för båda sidor
 public class Main {
 
     private static final String MENU =
