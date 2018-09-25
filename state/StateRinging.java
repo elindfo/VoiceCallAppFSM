@@ -8,7 +8,7 @@ public class StateRinging extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState sendAck(){
+    public AbstractVoiceAppState ack(){
         return new StateInSession();
     }
 }

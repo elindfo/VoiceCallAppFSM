@@ -8,8 +8,8 @@ public class StateInSession extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState endCall(){
+    public AbstractVoiceAppState bye(){
         System.out.println("outsignal: OK");
-        return new StateHangingUp();
+        return new StateWaiting();
     }
 }

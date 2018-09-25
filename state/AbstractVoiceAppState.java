@@ -8,11 +8,19 @@ public abstract class AbstractVoiceAppState {
         return this;
     }
 
-    public AbstractVoiceAppState sendAck(){
+    public AbstractVoiceAppState ack(){
         return this;
     }
 
-    public AbstractVoiceAppState endCall(){
+    public AbstractVoiceAppState bye(){
+        return this;
+    }
+
+    public AbstractVoiceAppState call(){
+        return this;
+    }
+
+    public AbstractVoiceAppState tro(){
         return this;
     }
 }

@@ -6,10 +6,10 @@ public class VoiceAppStateHandler {
 
     public VoiceAppStateHandler(VoiceAppState initialState){
         switch(initialState){
-            case READY: currentState = new StateReady(); break;
+            case WAITING: currentState = new StateWaiting(); break;
             case RINGING: currentState = new StateRinging(); break;
             case IN_SESSION: currentState = new StateInSession(); break;
-            case HANGING_UP: currentState = new StateHangingUp(); break;
+            case CALLING: currentState = new StateCalling(); break;
         }
     }
 
@@ -17,12 +17,20 @@ public class VoiceAppStateHandler {
         currentState = currentState.invite();
     }
 
-    public void invokeSendAck(){
-        currentState = currentState.sendAck();
+    public void invokeAck(){
+        currentState = currentState.ack();
     }
 
-    public void invokeEndCall(){
-        currentState = currentState.endCall();
+    public void invokeBye(){
+        currentState = currentState.bye();
+    }
+
+    public void invokeCall(){
+        currentState = currentState.call();
+    }
+
+    public void invokeTro(){
+        currentState = currentState.tro();
     }
 
     public VoiceAppState getCurrentState(){
