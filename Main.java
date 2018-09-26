@@ -6,7 +6,11 @@ import java.util.Scanner;
 //TODO Fråga om vi får använda koden från Caller-klassen
 //TODO Fråga om vi ska ha en eller flera inSession-klasser och om samtalsinitieringen är lika för båda sidor
 //TODO Fråga om det kanske räcker med en Ringing-klass istället för Ringing och Calling
-//TODO Fråga om enum för inkommande kommandon
+//TODO Fråga om enum för inkommande
+
+//TODO Hantera errors i AbstractVoiceAppState (Utgå alltid från fel)
+//TODO isBusy()-metod som implementeras i AbstractBusyState
+//TODO Hantera BUSY utanför tillståndsmaskinen. Så fort någon kontaktar så fråga om maskinen är BUSY. Metod busy() som returnerar true/false som är overridad på olika sätt beroende på vilket tillstånd man är
 
 public class Main {
 
