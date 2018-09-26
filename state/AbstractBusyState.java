@@ -7,4 +7,9 @@ public abstract class AbstractBusyState extends AbstractVoiceAppState{
         System.out.println("outsignal: BUSY");
         return this;
     }
+
+    @Override
+    public boolean isBusy(){
+        return true;
+    }
 }

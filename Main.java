@@ -3,8 +3,8 @@ import state.VoiceAppStateHandler;
 
 import java.util.Scanner;
 
-//TODO Fråga om vi får använda koden från Caller-klassen
-//TODO Fråga om enum för inkommande - Klass för översättning. Räkna med att UDP-port kan komma via invitet.
+//TODO Fråga om vi får använda koden från Caller-klassen - Svar ja!
+//TODO Fråga om enum för inkommande - Svar: Klass för översättning. Räkna med att UDP-port kan komma via invitet.
 
 //TODO Hantera errors i AbstractVoiceAppState (Utgå alltid från fel)
 //TODO isBusy()-metod som implementeras i AbstractBusyState
@@ -17,7 +17,10 @@ public class Main {
                     "2 - Ack\n" +
                     "3 - Bye\n" +
                     "4 - Call\n" +
-                    "5 - Tro";
+                    "5 - Tro\n" +
+                            "6 - EndCall\n" +
+                            "7 - Ok\n" +
+                            "8 - IsBusy";
 
     public static void main(String[] args) {
 
@@ -36,6 +39,9 @@ public class Main {
                 case 3: handler.invokeBye(); break;
                 case 4: handler.invokeCall(); break;
                 case 5: handler.invokeTro(); break;
+                case 6: handler.invokeEndCall(); break;
+                case 7: handler.invokeOk(); break;
+                case 8: handler.invokeIsBusy(); break;
             }
             System.out.println("Current state: " + handler.getCurrentState());
         }while(choice != 0);

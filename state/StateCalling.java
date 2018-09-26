@@ -1,6 +1,7 @@
 package state;
 
 public class StateCalling extends AbstractBusyState{
+
     @Override
     public VoiceAppState getState() {
         return VoiceAppState.CALLING;
