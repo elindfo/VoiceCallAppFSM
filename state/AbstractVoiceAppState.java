@@ -7,31 +7,38 @@ public abstract class AbstractVoiceAppState {
     public abstract VoiceAppState getState();
 
     public AbstractVoiceAppState invite(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState ack(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState bye(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState call(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState tro(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState endCall(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public AbstractVoiceAppState ok(){
-        return this;
+        System.out.println("output: ERR");
+        return new StateWaiting();
     }
 
     public boolean isBusy(){

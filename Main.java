@@ -10,6 +10,11 @@ import java.util.Scanner;
 //TODO isBusy()-metod som implementeras i AbstractBusyState
 //TODO Hantera BUSY utanför tillståndsmaskinen. Så fort någon kontaktar så fråga om maskinen är BUSY. Metod busy() som returnerar true/false som är overridad på olika sätt beroende på vilket tillstånd man är
 
+
+//Chronological order
+//TODO 1. Error handling in each state
+//TODO 2. Implement basic socket functionality to check if protocol works (no call establishing here)
+
 public class Main {
 
     private static final String MENU =
@@ -33,6 +38,7 @@ public class Main {
             System.out.println(MENU);
             System.out.print("Input: ");
             choice = input.nextInt();
+            System.out.println();
             switch (choice){
                 case 1: handler.invokeInvite(); break;
                 case 2: handler.invokeAck(); break;
@@ -43,6 +49,7 @@ public class Main {
                 case 7: handler.invokeOk(); break;
                 case 8: handler.invokeIsBusy(); break;
             }
+            System.out.println();
             System.out.println("Current state: " + handler.getCurrentState());
         }while(choice != 0);
     }
