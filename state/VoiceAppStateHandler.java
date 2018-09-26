@@ -4,12 +4,12 @@ public class VoiceAppStateHandler {
 
     private AbstractVoiceAppState currentState;
 
-    public VoiceAppStateHandler(VoiceAppState initialState){
+    public VoiceAppStateHandler(VoiceAppState initialState, MachineData machineData){
         switch(initialState){
-            case WAITING: currentState = new StateWaiting(); break;
-            case RINGING: currentState = new StateRinging(); break;
-            case IN_SESSION: currentState = new StateInSession(); break;
-            case CALLING: currentState = new StateCalling(); break;
+            case WAITING: currentState = new StateWaiting(machineData); break;
+            case RINGING: currentState = new StateRinging(machineData); break;
+            case IN_SESSION: currentState = new StateInSession(machineData); break;
+            case CALLING: currentState = new StateCalling(machineData); break;
         }
     }
 

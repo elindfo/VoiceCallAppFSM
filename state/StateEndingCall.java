@@ -1,6 +1,11 @@
 package state;
 
 public class StateEndingCall extends AbstractBusyState{
+
+    public StateEndingCall(MachineData machineData) {
+        super(machineData);
+    }
+
     @Override
     public VoiceAppState getState() {
         return VoiceAppState.ENDING_CALL;
@@ -8,6 +13,6 @@ public class StateEndingCall extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState ok(){
-        return new StateWaiting();
+        return new StateWaiting(getMachineData());
     }
 }

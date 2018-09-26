@@ -2,6 +2,10 @@ package state;
 
 public class StateWaiting extends AbstractVoiceAppState{
 
+    public StateWaiting(MachineData machineData) {
+        super(machineData);
+    }
+
     @Override
     public VoiceAppState getState() {
         return VoiceAppState.WAITING;
@@ -10,12 +14,14 @@ public class StateWaiting extends AbstractVoiceAppState{
     @Override
     public AbstractVoiceAppState invite(){
         System.out.println("outsignal: TRO");
-        return new StateRinging();
+        getMachineData().getClientPrintWriter().println("TRO");
+        return new StateRinging(getMachineData());
     }
 
     @Override
     public AbstractVoiceAppState call(){
         System.out.println("outsignal: INVITE");
-        return new StateCalling();
+        getMachineData().getClientPrintWriter().println("INVITE");
+        return new StateCalling(getMachineData());
     }
 }

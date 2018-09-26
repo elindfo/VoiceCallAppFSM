@@ -2,6 +2,10 @@ package state;
 
 public class StateCalling extends AbstractBusyState{
 
+    public StateCalling(MachineData machineData){
+        super(machineData);
+    }
+
     @Override
     public VoiceAppState getState() {
         return VoiceAppState.CALLING;
@@ -10,6 +14,7 @@ public class StateCalling extends AbstractBusyState{
     @Override
     public AbstractVoiceAppState tro(){
         System.out.println("outsignal: ACK");
-        return new StateInSession();
+        getMachineData().getClientPrintWriter().println("ACK");
+        return new StateInSession(getMachineData());
     }
 }

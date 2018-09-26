@@ -2,6 +2,10 @@ package state;
 
 public class StateRinging extends AbstractBusyState{
 
+    public StateRinging(MachineData machineData) {
+        super(machineData);
+    }
+
     @Override
     public VoiceAppState getState() {
         return VoiceAppState.RINGING;
@@ -9,6 +13,6 @@ public class StateRinging extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState ack(){
-        return new StateInSession();
+        return new StateInSession(getMachineData());
     }
 }
