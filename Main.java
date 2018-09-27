@@ -66,6 +66,7 @@ public class Main {
                     break;
                 }
                 case 3: handler.invokeEndCall(); break;
+                case 4: handler.invokeAck();
             }
         }while(data != 0);
     }
@@ -154,7 +155,10 @@ class ClientSocketListener extends Thread{
                     case OK: handler.invokeOk(); break;
                     case TRO: handler.invokeTro(); break;
                     case BYE: handler.invokeBye(); break;
-                    case END_CALL:handler.invokeEndCall(); break;
+                    case END_CALL: handler.invokeEndCall(); break;
+                    case ERR: handler.invokeErr(CommandParser.getArgs().get(0));
+
+
                 }
                 System.out.println("ClientSocketListener current state: " + handler.getCurrentState());
             }while(true); //TODO Fixa här sen

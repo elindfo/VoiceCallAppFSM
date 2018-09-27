@@ -24,4 +24,17 @@ public class MachineData {
         this.clientSocket = clientSocket;
         out = new PrintWriter(clientSocket.getOutputStream(), true);
     }
+
+    public void reset(){
+        if(out != null){
+            out.close();
+        }
+        if(clientSocket != null){
+            try {
+                clientSocket.close();
+            } catch (IOException e) {
+                System.err.println("Unable to close clientSocket");
+            }
+        }
+    }
 }

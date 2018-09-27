@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CommandParser {
 
     public enum CommandType{
-        INVITE, TRO, ACK, OK, END_CALL, BYE, NONE
+        INVITE, TRO, ACK, OK, END_CALL, BYE, ERR, NONE
     }
 
     private static String input = "";
@@ -29,7 +29,6 @@ public class CommandParser {
             throw new IllegalStateException("Command not loaded");
         }
         String[] splitInput = input.split(" ");
-        System.out.printf("From parse(): ");
         //Get command
         switch(splitInput[0]){
             case "INVITE": command = CommandType.INVITE; break;
@@ -38,6 +37,7 @@ public class CommandParser {
             case "OK": command = CommandType.OK; break;
             case "END_CALL": command = CommandType.END_CALL; break;
             case "BYE": command = CommandType.BYE; break;
+            case "ERR": command = CommandType.ERR; break;
             default: command = CommandType.NONE; return;
         }
 
