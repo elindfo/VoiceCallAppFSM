@@ -9,9 +9,7 @@ public class MachineData {
     private Socket clientSocket;
     private PrintWriter out;
 
-    public MachineData(Socket clientSocket) throws IOException {
-        this.clientSocket = clientSocket;
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
+    public MachineData(){
     }
 
     public PrintWriter getClientPrintWriter(){
@@ -20,5 +18,10 @@ public class MachineData {
 
     public Socket getClientSocket(){
         return clientSocket;
+    }
+
+    public void setClientSocket(Socket clientSocket) throws IOException{
+        this.clientSocket = clientSocket;
+        out = new PrintWriter(clientSocket.getOutputStream(), true);
     }
 }

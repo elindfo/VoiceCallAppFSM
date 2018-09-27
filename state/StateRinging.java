@@ -12,7 +12,7 @@ public class StateRinging extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState ack(){
+    public AbstractVoiceAppState answer(){
         return new StateInSession(getMachineData());
     }
 }

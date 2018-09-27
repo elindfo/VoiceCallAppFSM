@@ -23,94 +23,160 @@ import java.util.Scanner;
 public class Main {
 
     private static final String MENU =
-                            "1 - Invite\n" +
-                            "2 - Ack\n" +
-                            "3 - Bye\n" +
-                            "4 - Call\n" +
-                            "5 - Tro\n" +
-                            "6 - EndCall\n" +
-                            "7 - Ok\n" +
-                            "8 - IsBusy";
+                            "1 - Call\n" +
+                            "2 - Answer\n" +
+                            "3 - End Call";
 
     public static void main(String[] args) {
 
-        if(args.length != 2){
+        if(args.length != 1){
             System.exit(0);
         }
 
         int port = Integer.parseInt(args[0]);
+
+        VoiceAppStateHandler handler = new VoiceAppStateHandler(VoiceAppState.WAITING);
+        new ServerSocketListener(handler, port).start();
+        handleInput(handler);
+    }
+
+    private static void handleInput(VoiceAppStateHandler handler){
         Scanner input = new Scanner(System.in);
-        if(Integer.parseInt(args[1]) == 1){ //Server
-            ServerSocket s = null;
-            try{
-                s = new ServerSocket(port);
-                System.out.println("Waiting for client...");
-                Socket cs = s.accept();
-                System.out.println("Client connected...");
-                VoiceAppStateHandler handler = new VoiceAppStateHandler(VoiceAppState.WAITING, new MachineData(cs));
-                BufferedReader br = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-                String recievedMessage = "";
-                do{
-                    System.out.println("Current state: " + handler.getCurrentState());
-                    recievedMessage = br.readLine();
-                    CommandParser.load(recievedMessage);
-                    System.out.println("Command received: " + CommandParser.getCommand());
-                    switch(CommandParser.getCommand()){
-                        case INVITE: handler.invokeInvite(); break;
-                        case TRO: handler.invokeTro(); break;
-                        case ACK: handler.invokeAck(); break;
-                        case END_CALL: handler.invokeEndCall(); break;
-                        case BYE: handler.invokeBye(); break;
-                        case OK: handler.invokeOk(); break;
-                        case NONE:
-                            System.out.println("Invalid command received: " + CommandParser.getCommand());
+        int data = 0;
+        do{
+            System.out.println(handler.getCurrentState());
+            System.out.println(MENU);
+            System.out.println("Choice: ");
+            data = input.nextInt();
+            switch(data){
+                case 1: {
+                    System.out.print("ip: ");
+                    input.nextLine();
+                    String ip = input.nextLine();
+                    System.out.print("port: ");
+                    int port = input.nextInt();
+                    Socket clientSocket = null;
+                    try{
+                        clientSocket = new Socket(ip, port);
+                        handler.invokeCall(clientSocket);
+                        new ClientSocketListener(handler, clientSocket).start();
+                    }catch(IOException e){
+                        System.err.println("Unable to connect to ip: " + ip + ", port: " + port);
                     }
-                }while(!recievedMessage.equals("exit"));
-            }catch(IOException e){
-                System.err.println("Socket error");
+                    break;
+                }
+                case 3: handler.invokeEndCall(); break;
             }
-            finally{
-                if(s == null){
-                    try {
-                        s.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        }while(data != 0);
+    }
+}
+
+class ServerSocketListener extends Thread{
+
+    private VoiceAppStateHandler handler;
+    private int port;
+
+    public ServerSocketListener(VoiceAppStateHandler handler, int port){
+        this.handler = handler;
+        this.port = port;
+    }
+
+    @Override
+    public void run(){
+        ServerSocket serverSocket = null;
+        Socket clientSocket = null;
+        try{
+            serverSocket = new ServerSocket(port);
+            do{
+                System.out.println("Waiting for client");
+                clientSocket = serverSocket.accept();
+                System.out.println("Client connected...");
+                if(handler.invokeIsBusy()){
+                    PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
+                    pw.println("BUSY");
+                    clientSocket.close();
+                }
+                else{
+                    new ClientSocketListener(handler, clientSocket).start();
+                }
+
+            }while(true);
+        }catch(IOException e){
+
+        }finally{
+            if(serverSocket != null){
+                try {
+                    serverSocket.close();
+                } catch (IOException e) {
+                    System.err.println("Unable to close serverSocket");
                 }
             }
-        }
-        else{ //Client
-            Socket s = null;
-            try{
-                System.out.println("Connecting to server...");
-                s = new Socket("localhost", port);
-                System.out.println("Connected...");
-                VoiceAppStateHandler handler = new VoiceAppStateHandler(VoiceAppState.WAITING, new MachineData(s));
-                BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
-                handler.invokeCall();
-                String receivedMessage = "";
-                do{
-                    System.out.println("Current state: " + handler.getCurrentState());
-                    if(handler.getCurrentState() == VoiceAppState.IN_SESSION){
-                        handler.invokeEndCall();
-                    }
-                    receivedMessage = br.readLine();
-                    CommandParser.load(receivedMessage);
-                    System.out.println("Command received: " + CommandParser.getCommand());
-                    switch(CommandParser.getCommand()){
-                        case INVITE: handler.invokeInvite(); break;
-                        case TRO: handler.invokeTro(); break;
-                        case ACK: handler.invokeAck(); break;
-                        case END_CALL: handler.invokeEndCall(); break;
-                        case BYE: handler.invokeBye(); break;
-                        case OK: handler.invokeOk(); break;
-                        case NONE: break;
-                    }
-                }while(handler.getCurrentState() != VoiceAppState.WAITING);
-            }catch(IOException e){
-
+            if(clientSocket != null){
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    System.err.println("Unable to close clientSocket");
+                }
             }
         }
     }
 }
+
+class ClientSocketListener extends Thread{
+
+    private VoiceAppStateHandler handler;
+    private Socket clientSocket;
+
+    public ClientSocketListener(VoiceAppStateHandler handler, Socket clientSocket){
+        this.handler = handler;
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run(){
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            String receivedMessage = "";
+            do{
+                System.out.println("innan received");
+                receivedMessage = in.readLine();
+                System.out.println("ClientSocketListener received: " + receivedMessage);
+                if(receivedMessage == null){
+                    System.out.println("received = null");
+                    throw new IOException();
+                }
+                CommandParser.load(receivedMessage);
+                switch(CommandParser.getCommand()){
+                    case INVITE: handler.invokeInvite(clientSocket); break;
+                    case ACK: handler.invokeAck(); break;
+                    case OK: handler.invokeOk(); break;
+                    case TRO: handler.invokeTro(); break;
+                    case BYE: handler.invokeBye(); break;
+                    case END_CALL:handler.invokeEndCall(); break;
+                }
+                System.out.println("ClientSocketListener current state: " + handler.getCurrentState());
+            }while(true); //TODO Fixa här sen
+        } catch (IOException e) {
+            System.out.println("IOException");
+            handler.invokeErr("Lost connection to client.");
+        } finally{
+            if(in != null){
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    System.err.println("Unable to close BufferedReader");
+                }
+            }
+            if(clientSocket != null){
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    System.err.println("Unable to close clientSocket");
+                }
+            }
+        }
+    }
+}
+

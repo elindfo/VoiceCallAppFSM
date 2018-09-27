@@ -1,36 +1,41 @@
 package state;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class VoiceAppStateHandler {
 
     private AbstractVoiceAppState currentState;
+    private MachineData machineData;
 
-    public VoiceAppStateHandler(VoiceAppState initialState, MachineData machineData){
+    public VoiceAppStateHandler(VoiceAppState initialState){
+        this.machineData = new MachineData();
         switch(initialState){
-            case WAITING: currentState = new StateWaiting(machineData); break;
-            case RINGING: currentState = new StateRinging(machineData); break;
-            case IN_SESSION: currentState = new StateInSession(machineData); break;
-            case CALLING: currentState = new StateCalling(machineData); break;
+            case WAITING: currentState = new StateWaiting(this.machineData); break;
+            case RINGING: currentState = new StateRinging(this.machineData); break;
+            case IN_SESSION: currentState = new StateInSession(this.machineData); break;
+            case CALLING: currentState = new StateCalling(this.machineData); break;
         }
     }
 
-    public void invokeInvite(){
-        currentState = currentState.invite();
+    public void invokeInvite(Socket clientSocket) throws IOException {
+        currentState = currentState.invite(clientSocket);
     }
 
     public void invokeAck(){
-        currentState = currentState.ack();
+        currentState = currentState.answer();
     }
 
     public void invokeBye(){
         currentState = currentState.bye();
     }
 
-    public void invokeCall(){
-        currentState = currentState.call();
+    public void invokeCall(Socket clientSocket){
+        currentState = currentState.call(clientSocket);
     }
 
     public void invokeTro(){
-        currentState = currentState.tro();
+        currentState = currentState.callAnswered();
     }
 
     public void invokeEndCall() {
@@ -45,7 +50,15 @@ public class VoiceAppStateHandler {
         return currentState.isBusy();
     }
 
+    public void invokeErr(String m){
+        currentState = currentState.err(m);
+    }
+
     public VoiceAppState getCurrentState(){
         return currentState.getState();
+    }
+
+    public MachineData getMachineData(){
+        return machineData;
     }
 }
