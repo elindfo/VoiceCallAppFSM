@@ -12,7 +12,8 @@ public class StateRinging extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState answer(){
+    public AbstractVoiceAppState ack(){
+        System.out.println("Method call: ack\nState: Ringing\noutsignal:");
         return new StateInSession(getMachineData());
     }
 }

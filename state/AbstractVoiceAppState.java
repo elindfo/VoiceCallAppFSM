@@ -24,9 +24,9 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState answer(){
+    public AbstractVoiceAppState ack(){
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR answer");
+        getMachineData().getClientPrintWriter().println("ERR ack");
         return new StateWaiting(machineData);
     }
 
@@ -42,9 +42,9 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState callAnswered(){
+    public AbstractVoiceAppState tro(){
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR callAnswered");
+        getMachineData().getClientPrintWriter().println("ERR tro");
         return new StateWaiting(machineData);
     }
 
