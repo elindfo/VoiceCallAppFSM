@@ -140,6 +140,7 @@ class ClientSocketListener extends Thread{
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String receivedMessage = "";
+            boolean running = true;
             do{
                 System.out.println("innan received");
                 receivedMessage = in.readLine();
@@ -156,13 +157,13 @@ class ClientSocketListener extends Thread{
                     case TRO: handler.invokeTro(); break;
                     case BYE: handler.invokeBye(); break;
                     case END_CALL: handler.invokeEndCall(); break;
-                    case ERR: handler.invokeErr(CommandParser.getArgs().get(0)); break;
-                    case BUSY: handler.invokeBusy(); break;
-
+                    case ERR: handler.invokeErr(CommandParser.getArgs().get(0)); running = false; break;
+                    case BUSY: handler.invokeBusy(); running = false; break;
                 }
                 System.out.println("ClientSocketListener current state: " + handler.getCurrentState());
-            }while(true); //TODO Fixa här sen
+            }while(running); //TODO Fixa här sen
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("IOException");
             handler.invokeErr("Lost connection to client.");
         } finally{
