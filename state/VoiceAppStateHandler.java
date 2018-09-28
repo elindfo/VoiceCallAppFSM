@@ -23,7 +23,7 @@ public class VoiceAppStateHandler {
     }
 
     public void invokeAck(){
-        currentState = currentState.answer();
+        currentState = currentState.ack();
     }
 
     public void invokeBye(){
@@ -35,7 +35,7 @@ public class VoiceAppStateHandler {
     }
 
     public void invokeTro(){
-        currentState = currentState.callAnswered();
+        currentState = currentState.tro();
     }
 
     public void invokeEndCall() {

@@ -12,9 +12,8 @@ public class StateCalling extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState callAnswered(){
-        System.out.println("outsignal: ACK");
-        System.out.println("callAnswered: " + getMachineData().getClientSocket().toString());
+    public AbstractVoiceAppState tro(){
+        System.out.println("Method: tro\nState: Calling\noutsignal: ACK");
         getMachineData().getClientPrintWriter().println("ACK");
         return new StateInSession(getMachineData());
     }

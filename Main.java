@@ -10,16 +10,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-//TODO Fråga om vi får använda koden från Caller-klassen - Svar ja!
-//TODO Fråga om enum för inkommande - Svar: Klass för översättning. Räkna med att UDP-port kan komma via invitet.
-
-//TODO Hantera BUSY utanför tillståndsmaskinen. Så fort någon kontaktar så fråga om maskinen är BUSY. Metod busy() som returnerar true/false som är overridad på olika sätt beroende på vilket tillstånd man är
-
-//Actual todos
-//TODO Create two different starting modes, one for receiving a call and one for initiating a call
-//TODO Implement basic socket functionality to check if protocol works (no call establishing here). Program menu for either answering call or initiating call needs to be made.
-//TODO Error handling over socket. Check so that the client disconnects if wrong protocol message is sent and that everything resets.
-
 public class Main {
 
     private static final String MENU =
@@ -43,10 +33,9 @@ public class Main {
     private static void handleInput(VoiceAppStateHandler handler){
         Scanner input = new Scanner(System.in);
         int data = 0;
+        System.out.println(MENU);
         do{
             System.out.println(handler.getCurrentState());
-            System.out.println(MENU);
-            System.out.println("Choice: ");
             data = input.nextInt();
             switch(data){
                 case 1: {
@@ -89,9 +78,7 @@ class ServerSocketListener extends Thread{
         try{
             serverSocket = new ServerSocket(port);
             do{
-                System.out.println("Waiting for client");
                 clientSocket = serverSocket.accept();
-                System.out.println("Client connected...");
                 if(handler.invokeIsBusy()){
                     PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
                     pw.println("BUSY");
@@ -142,7 +129,6 @@ class ClientSocketListener extends Thread{
             String receivedMessage = "";
             boolean running = true;
             do{
-                System.out.println("innan received");
                 receivedMessage = in.readLine();
                 System.out.println("ClientSocketListener received: " + receivedMessage);
                 if(receivedMessage == null){
@@ -160,11 +146,10 @@ class ClientSocketListener extends Thread{
                     case ERR: handler.invokeErr(CommandParser.getArgs().get(0)); running = false; break;
                     case BUSY: handler.invokeBusy(); running = false; break;
                 }
-                System.out.println("ClientSocketListener current state: " + handler.getCurrentState());
+                System.out.println("Current State: " + handler.getCurrentState());
             }while(running); //TODO Fixa här sen
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("IOException");
             handler.invokeErr("Lost connection to client.");
         } finally{
             if(in != null){

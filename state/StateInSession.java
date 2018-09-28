@@ -13,14 +13,14 @@ public class StateInSession extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState endCall(){
-        System.out.println("outsignal: BYE");
+        System.out.println("Method call: endCall\nState: InSession\noutsignal: BYE");
         getMachineData().getClientPrintWriter().println("BYE");
         return new StateEndingCall(getMachineData());
     }
 
     @Override
     public AbstractVoiceAppState bye(){
-        System.out.println("outsignal: OK");
+        System.out.println("Method call: bye\nState: InSession\noutsignal: OK");
         getMachineData().getClientPrintWriter().println("OK");
         return new StateWaiting(getMachineData());
     }
