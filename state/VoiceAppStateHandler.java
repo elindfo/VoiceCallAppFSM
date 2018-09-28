@@ -54,6 +54,10 @@ public class VoiceAppStateHandler {
         currentState = currentState.err(m);
     }
 
+    public void invokeBusy(){
+        currentState = currentState.busy();
+    }
+
     public VoiceAppState getCurrentState(){
         return currentState.getState();
     }

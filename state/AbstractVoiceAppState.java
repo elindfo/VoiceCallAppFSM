@@ -66,6 +66,12 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
+    public AbstractVoiceAppState busy(){
+        System.out.println("Server: BUSY");
+        getMachineData().reset();
+        return new StateWaiting(machineData);
+    }
+
     public boolean isBusy(){
         return false;
     }
