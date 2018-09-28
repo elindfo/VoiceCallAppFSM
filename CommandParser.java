@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CommandParser {
 
     public enum CommandType{
-        INVITE, TRO, ACK, OK, END_CALL, BYE, ERR, NONE
+        INVITE, TRO, ACK, OK, END_CALL, BYE, ERR, BUSY, NONE
     }
 
     private static String input = "";
@@ -38,6 +38,7 @@ public class CommandParser {
             case "END_CALL": command = CommandType.END_CALL; break;
             case "BYE": command = CommandType.BYE; break;
             case "ERR": command = CommandType.ERR; break;
+            case "BUSY": command = CommandType.BUSY; break;
             default: command = CommandType.NONE; return;
         }
 

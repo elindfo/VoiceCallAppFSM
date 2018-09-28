@@ -157,7 +157,7 @@ class ClientSocketListener extends Thread{
                     case BYE: handler.invokeBye(); break;
                     case END_CALL: handler.invokeEndCall(); break;
                     case ERR: handler.invokeErr(CommandParser.getArgs().get(0));
-
+                    case BUSY: handler.invokeErr("Server busy"); break;
 
                 }
                 System.out.println("ClientSocketListener current state: " + handler.getCurrentState());
