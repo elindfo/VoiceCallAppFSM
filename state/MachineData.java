@@ -56,5 +56,6 @@ public class MachineData {
                 System.err.println("Unable to close clientSocket");
             }
         }
+        remotePort = 0;
     }
 }

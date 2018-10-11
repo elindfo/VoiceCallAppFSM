@@ -18,8 +18,8 @@ public class StateRinging extends AbstractBusyState{
     public AbstractVoiceAppState ack() throws IOException {
         System.out.println("Method call: ack\nState: Ringing\noutsignal:");
         InetAddress inetAddress = getMachineData().getClientSocket().getInetAddress();
-        System.out.println("ack: initiating call with " + inetAddress.getHostAddress());
         int port = getMachineData().getRemotePort();
+        System.out.println("ack: initiating call with " + inetAddress.getHostAddress() + " on port " + port);
         getMachineData().getAudioUDPStream().connectTo(inetAddress, port);
         getMachineData().getAudioUDPStream().startStreaming();
         return new StateInSession(getMachineData());
