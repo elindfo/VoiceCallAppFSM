@@ -1,5 +1,7 @@
-import state.VoiceAppState;
-import state.VoiceAppStateHandler;
+package lab2b;
+
+import lab2b.state.VoiceAppState;
+import lab2b.state.VoiceAppStateHandler;
 
 import java.io.IOException;
 import java.net.Socket;

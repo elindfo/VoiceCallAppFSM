@@ -1,3 +1,5 @@
+package lab2b;
+
 public enum SignalType {
 
     INVITE("INVITE"),

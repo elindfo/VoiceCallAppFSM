@@ -1,4 +1,6 @@
-import state.VoiceAppStateHandler;
+package lab2b;
+
+import lab2b.state.VoiceAppStateHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;

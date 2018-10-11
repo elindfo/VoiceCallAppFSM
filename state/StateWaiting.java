@@ -1,4 +1,4 @@
-package state;
+package lab2b.state;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -23,8 +23,8 @@ public class StateWaiting extends AbstractVoiceAppState{
 
     @Override
     public AbstractVoiceAppState call(){
-        System.out.println("Method call: call\nState: Waiting\noutsignal: INVITE");
-        getMachineData().getClientPrintWriter().println("INVITE");
+        System.out.println("Method call: call\nState: Waiting\noutsignal: INVITE 6666");
+        getMachineData().getClientPrintWriter().println("INVITE 6666");
         return new StateCalling(getMachineData());
     }
 }

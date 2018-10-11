@@ -1,4 +1,4 @@
-package state;
+package lab2b.state;
 
 import java.io.IOException;
 import java.net.Socket;

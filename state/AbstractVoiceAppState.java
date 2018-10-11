@@ -1,4 +1,4 @@
-package state;
+package lab2b.state;
 
 //TODO Fixa errorhantering, t.ex. om man skickar ACK från fel tillstånd.
 

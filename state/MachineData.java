@@ -1,4 +1,6 @@
-package state;
+package lab2b.state;
+
+import lab2b.AudioStreamUDP;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +9,7 @@ import java.net.Socket;
 public class MachineData {
 
     private Socket clientSocket;
+    private AudioStreamUDP udpStream;
     private PrintWriter out;
 
     public MachineData(){
