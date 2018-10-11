@@ -8,17 +8,20 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 class ClientSocketListener extends Thread{
 
     private VoiceAppStateHandler handler;
     private Queue<SignalType> signalQueue;
     private Socket clientSocket;
+    private AtomicBoolean isFree;
 
-    public ClientSocketListener(VoiceAppStateHandler handler, Socket clientSocket, Queue<SignalType> signalQueue){
+    public ClientSocketListener(VoiceAppStateHandler handler, Socket clientSocket, Queue<SignalType> signalQueue, AtomicBoolean isFree){
         this.handler = handler;
         this.signalQueue = signalQueue;
         this.clientSocket = clientSocket;
+        this.isFree = isFree;
     }
 
     @Override
@@ -41,6 +44,7 @@ class ClientSocketListener extends Thread{
                 System.out.println("Command: " + CommandParser.getCommand() + " args: " + CommandParser.getArgs());
                 switch(signalQueue.peek()){
                     case INVITE: {
+                        isFree.set(false);
                         if(handler.getMachineData().getRemotePort() <= 0){
                             handler.getMachineData().setRemotePort(Integer.parseInt(CommandParser.getArgs().get(0)));
                         }

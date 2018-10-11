@@ -41,7 +41,7 @@ class ServerSocketListener extends Thread{
                 else{
                     currentClient = clientSocket;
                     handler.getMachineData().setClientSocket(currentClient);
-                    new ClientSocketListener(handler, currentClient, signalQueue).start();
+                    new ClientSocketListener(handler, currentClient, signalQueue, isFree).start();
                 }
 
             }while(true);

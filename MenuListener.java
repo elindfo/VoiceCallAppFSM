@@ -56,7 +56,7 @@ public class MenuListener extends Thread{
                             currentClient = clientSocket;
                             handler.getMachineData().setClientSocket(currentClient);
                             handler.invokeCall();
-                            new ClientSocketListener(handler, currentClient, signalQueue).start();
+                            new ClientSocketListener(handler, currentClient, signalQueue, isFree).start();
                         }catch(SocketTimeoutException e){
                             System.err.println("Socket timeout");
                         }catch(IOException e){
@@ -76,6 +76,7 @@ public class MenuListener extends Thread{
                         signalQueue.poll();
                         try {
                             handler.invokeInvite(currentClient);
+                            isFree.set(true);
                         } catch (IOException e) {
                             System.err.println("Unable to answer");
                         }
@@ -89,6 +90,7 @@ public class MenuListener extends Thread{
                     if(signalQueue.peek() == SignalType.INVITE){
                         signalQueue.poll();
                         handler.getMachineData().getClientPrintWriter().println("BUSY");
+                        isFree.set(true);
                         break;
                     }
                     else if(handler.invokeIsBusy()){
