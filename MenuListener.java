@@ -56,11 +56,12 @@ public class MenuListener extends Thread{
                             handler.getMachineData().setClientSocket(currentClient);
                             handler.invokeCall();
                             new ClientSocketListener(handler, currentClient, signalQueue).start();
-                            isFree.set(true);
                         }catch(SocketTimeoutException e){
                             System.err.println("Socket Timeout");
                         }catch(IOException e){
                             System.err.println("Unable to connect to ip: " + ip + ", port: " + port);
+                        }finally{
+                            isFree.set(true);
                         }
                     }
                     else{
