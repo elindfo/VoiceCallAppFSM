@@ -5,6 +5,7 @@ import lab2b.state.VoiceAppStateHandler;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Queue;
 import java.util.Scanner;
@@ -51,13 +52,13 @@ public class MenuListener extends Thread{
                         Socket clientSocket = null;
                         try{
                             clientSocket = new Socket(ip, port);
-                            //clientSocket.setSoTimeout(Main.SOCKET_TIMEOUT);
+                            clientSocket.setSoTimeout(Main.SOCKET_TIMEOUT);
                             currentClient = clientSocket;
                             handler.getMachineData().setClientSocket(currentClient);
                             handler.invokeCall();
                             new ClientSocketListener(handler, currentClient, signalQueue).start();
                         }catch(SocketTimeoutException e){
-                            System.err.println("Socket Timeout");
+                            System.err.println("Socket timeout");
                         }catch(IOException e){
                             System.err.println("Unable to connect to ip: " + ip + ", port: " + port);
                         }finally{
@@ -91,7 +92,15 @@ public class MenuListener extends Thread{
                         break;
                     }
                     else if(handler.invokeIsBusy()){
-                        handler.invokeEndCall();
+                        try {
+                            handler.invokeEndCall();
+                        } catch (SocketException e) {
+                            try {
+                                handler.reset();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
                     }
 
                 }

@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
 
-    public static final int SOCKET_TIMEOUT = 2000;
+    public static final int SOCKET_TIMEOUT = 10000;
 
     public static void main(String[] args) {
 

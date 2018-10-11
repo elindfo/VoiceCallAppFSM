@@ -4,6 +4,7 @@ package lab2b.state;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 public abstract class AbstractVoiceAppState {
 
@@ -48,7 +49,7 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState endCall(){
+    public AbstractVoiceAppState endCall() throws SocketException {
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR endCall");
         return new StateWaiting(machineData);

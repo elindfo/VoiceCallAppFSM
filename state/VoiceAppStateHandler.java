@@ -2,6 +2,7 @@ package lab2b.state;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class VoiceAppStateHandler {
 
@@ -38,7 +39,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.tro();
     }
 
-    public void invokeEndCall() {
+    public void invokeEndCall() throws SocketException {
         currentState = currentState.endCall();
     }
 

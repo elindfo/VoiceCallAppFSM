@@ -22,6 +22,7 @@ public class StateRinging extends AbstractBusyState{
         System.out.println("ack: initiating call with " + inetAddress.getHostAddress() + " on port " + port);
         getMachineData().getAudioUDPStream().connectTo(inetAddress, port);
         getMachineData().getAudioUDPStream().startStreaming();
+        getMachineData().getClientSocket().setSoTimeout(0);
         return new StateInSession(getMachineData());
     }
 }

@@ -24,6 +24,7 @@ public class StateCalling extends AbstractBusyState{
         int port = getMachineData().getRemotePort();
         getMachineData().getAudioUDPStream().connectTo(inetAddress, port);
         getMachineData().getAudioUDPStream().startStreaming();
+        getMachineData().getClientSocket().setSoTimeout(0);
         return new StateInSession(getMachineData());
     }
 }
