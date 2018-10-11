@@ -72,6 +72,9 @@ class ClientSocketListener extends Thread{
         }catch (IOException e) {
             try {
                 handler.invokeErr("Lost connection to client.");
+                if(!signalQueue.isEmpty()){
+                    signalQueue.clear();
+                }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
