@@ -31,6 +31,12 @@ public class Main {
         int port = Integer.parseInt(args[0]);
 
         VoiceAppStateHandler handler = new VoiceAppStateHandler(VoiceAppState.WAITING);
+        try {
+            handler.getMachineData().setAudioUDPStream(new AudioStreamUDP());
+        } catch (IOException e) {
+            System.err.println("Unable to create AudioStreamUDP");
+            System.exit(0);
+        }
         Queue<SignalType> signalQueue = new ArrayBlockingQueue<>(64);
         Socket currentClient = null;
         AtomicBoolean isFree = new AtomicBoolean(true);

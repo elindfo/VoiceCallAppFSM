@@ -15,7 +15,7 @@ public class StateWaiting extends AbstractVoiceAppState{
     }
 
     @Override
-    public AbstractVoiceAppState invite() throws IOException{
+    public AbstractVoiceAppState invite(){
         System.out.println("Method call: invite\nState: Waiting\noutsignal: TRO");
         getMachineData().getClientPrintWriter().println("TRO");
         return new StateRinging(getMachineData());
@@ -23,8 +23,8 @@ public class StateWaiting extends AbstractVoiceAppState{
 
     @Override
     public AbstractVoiceAppState call(){
-        System.out.println("Method call: call\nState: Waiting\noutsignal: INVITE 6666");
-        getMachineData().getClientPrintWriter().println("INVITE 6666");
+        System.out.println("Method call: call\nState: Waiting\noutsignal: INVITE " + getMachineData().getAudioUDPStream().getLocalPort());
+        getMachineData().getClientPrintWriter().println("INVITE " + getMachineData().getAudioUDPStream().getLocalPort());
         return new StateCalling(getMachineData());
     }
 }

@@ -24,7 +24,7 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState ack(){
+    public AbstractVoiceAppState ack() throws IOException {
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR ack");
         return new StateWaiting(machineData);
@@ -42,7 +42,7 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState tro(){
+    public AbstractVoiceAppState tro() throws IOException {
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR tro");
         return new StateWaiting(machineData);

@@ -38,8 +38,9 @@ class ClientSocketListener extends Thread{
                 CommandParser.load(receivedMessage);
                 signalQueue.add(CommandParser.getCommand());
                 System.out.println("SIGNAL QUEUE PEEK: " + signalQueue.peek());
+                System.out.println("Command: " + CommandParser.getCommand() + " args: " + CommandParser.getArgs());
                 switch(signalQueue.peek()){
-                    case INVITE: System.out.println("Nu ringer det"); break;
+                    case INVITE: handler.getMachineData().setRemotePort(Integer.parseInt(CommandParser.getArgs().get(0))); System.out.println("Nu ringer det"); break;
                     case ACK: signalQueue.poll(); handler.invokeAck(); break;
                     case OK: signalQueue.poll(); handler.invokeOk(); break;
                     case TRO: signalQueue.poll(); handler.invokeTro(); break;

@@ -22,7 +22,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.invite();
     }
 
-    public void invokeAck(){
+    public void invokeAck() throws IOException {
         currentState = currentState.ack();
     }
 
@@ -34,7 +34,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.call();
     }
 
-    public void invokeTro(){
+    public void invokeTro() throws IOException {
         currentState = currentState.tro();
     }
 

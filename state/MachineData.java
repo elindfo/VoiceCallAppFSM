@@ -9,7 +9,8 @@ import java.net.Socket;
 public class MachineData {
 
     private Socket clientSocket;
-    private AudioStreamUDP udpStream;
+    private AudioStreamUDP audioUDPStream;
+    private int remotePort;
     private PrintWriter out;
 
     public MachineData(){
@@ -26,6 +27,22 @@ public class MachineData {
     public void setClientSocket(Socket clientSocket) throws IOException{
         this.clientSocket = clientSocket;
         out = new PrintWriter(clientSocket.getOutputStream(), true);
+    }
+
+    public void setRemotePort(int port){
+        remotePort = port;
+    }
+
+    public int getRemotePort(){
+        return remotePort;
+    }
+
+    public AudioStreamUDP getAudioUDPStream(){
+        return audioUDPStream;
+    }
+
+    public void setAudioUDPStream(AudioStreamUDP audioUDPStream){
+        this.audioUDPStream = audioUDPStream;
     }
 
     public void reset(){
