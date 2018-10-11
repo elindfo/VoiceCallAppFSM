@@ -23,6 +23,7 @@ public class StateCalling extends AbstractBusyState{
         System.out.println("tro: initiating call with " + inetAddress.getHostAddress());
         int port = getMachineData().getRemotePort();
         getMachineData().getAudioUDPStream().connectTo(inetAddress, port);
+        getMachineData().getAudioUDPStream().startStreaming();
         return new StateInSession(getMachineData());
     }
 }
