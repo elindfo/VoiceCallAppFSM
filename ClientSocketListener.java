@@ -64,9 +64,17 @@ class ClientSocketListener extends Thread{
             }while(running); //TODO Fixa här sen
         }catch (SocketTimeoutException e){
             System.out.println("SocketTimeoutException");
-            handler.reset();
+            try {
+                handler.reset();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }catch (IOException e) {
-            handler.invokeErr("Lost connection to client.");
+            try {
+                handler.invokeErr("Lost connection to client.");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         } finally{
             if(in != null){
                 try {

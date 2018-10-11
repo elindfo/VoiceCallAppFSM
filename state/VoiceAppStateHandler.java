@@ -26,7 +26,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.ack();
     }
 
-    public void invokeBye(){
+    public void invokeBye() throws IOException {
         currentState = currentState.bye();
     }
 
@@ -42,7 +42,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.endCall();
     }
 
-    public void invokeOk(){
+    public void invokeOk() throws IOException {
         currentState = currentState.ok();
     }
 
@@ -50,11 +50,11 @@ public class VoiceAppStateHandler {
         return currentState.isBusy();
     }
 
-    public void invokeErr(String m){
+    public void invokeErr(String m) throws IOException {
         currentState = currentState.err(m);
     }
 
-    public void invokeBusy(){
+    public void invokeBusy() throws IOException {
         currentState = currentState.busy();
     }
 
@@ -66,7 +66,7 @@ public class VoiceAppStateHandler {
         return machineData;
     }
 
-    public void reset(){
+    public void reset() throws IOException {
         machineData.reset();
         currentState = new StateWaiting(machineData);
     }

@@ -30,7 +30,7 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState bye(){
+    public AbstractVoiceAppState bye() throws IOException {
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR bye");
         return new StateWaiting(machineData);
@@ -54,19 +54,19 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState ok(){
+    public AbstractVoiceAppState ok() throws IOException {
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR ok");
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState err(String m){
+    public AbstractVoiceAppState err(String m) throws IOException {
         System.out.println("ERR received. Message: " + m);
         getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState busy(){
+    public AbstractVoiceAppState busy() throws IOException {
         System.out.println("Server: BUSY");
         getMachineData().reset();
         return new StateWaiting(machineData);

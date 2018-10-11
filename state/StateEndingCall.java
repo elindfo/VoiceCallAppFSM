@@ -1,5 +1,7 @@
 package lab2b.state;
 
+import java.io.IOException;
+
 public class StateEndingCall extends AbstractBusyState{
 
     public StateEndingCall(MachineData machineData) {
@@ -12,7 +14,7 @@ public class StateEndingCall extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState ok(){
+    public AbstractVoiceAppState ok() throws IOException {
         System.out.println("Method call: ok\nState: EndingCall\noutsignal:");
         getMachineData().reset();
         return new StateWaiting(getMachineData());

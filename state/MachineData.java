@@ -45,7 +45,7 @@ public class MachineData {
         this.audioUDPStream = audioUDPStream;
     }
 
-    public void reset(){
+    public void reset() throws IOException {
         if(out != null){
             out.close();
         }
@@ -57,5 +57,6 @@ public class MachineData {
             }
         }
         remotePort = 0;
+        audioUDPStream = new AudioStreamUDP();
     }
 }

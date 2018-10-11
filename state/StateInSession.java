@@ -1,5 +1,7 @@
 package lab2b.state;
 
+import java.io.IOException;
+
 public class StateInSession extends AbstractBusyState{
 
     public StateInSession(MachineData machineData) {
@@ -21,7 +23,7 @@ public class StateInSession extends AbstractBusyState{
     }
 
     @Override
-    public AbstractVoiceAppState bye(){
+    public AbstractVoiceAppState bye() throws IOException {
         System.out.println("Method call: bye\nState: InSession\noutsignal: OK");
         getMachineData().getAudioUDPStream().stopStreaming();
         getMachineData().getAudioUDPStream().close();
