@@ -19,7 +19,7 @@ public class VoiceAppStateHandler {
     }
 
     public void invokeInvite(Socket clientSocket) throws IOException {
-        currentState = currentState.invite(clientSocket);
+        currentState = currentState.invite();
     }
 
     public void invokeAck(){
@@ -30,8 +30,8 @@ public class VoiceAppStateHandler {
         currentState = currentState.bye();
     }
 
-    public void invokeCall(Socket clientSocket){
-        currentState = currentState.call(clientSocket);
+    public void invokeCall(){
+        currentState = currentState.call();
     }
 
     public void invokeTro(){
@@ -64,5 +64,10 @@ public class VoiceAppStateHandler {
 
     public MachineData getMachineData(){
         return machineData;
+    }
+
+    public void reset(){
+        machineData.reset();
+        currentState = new StateWaiting(machineData);
     }
 }

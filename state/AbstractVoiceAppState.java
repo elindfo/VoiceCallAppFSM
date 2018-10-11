@@ -19,7 +19,7 @@ public abstract class AbstractVoiceAppState {
 
     public abstract VoiceAppState getState();
 
-    public AbstractVoiceAppState invite(Socket clientSocket) throws IOException {
+    public AbstractVoiceAppState invite() throws IOException {
         System.out.println("output: ERR");
         return new StateWaiting(machineData);
     }
@@ -36,7 +36,7 @@ public abstract class AbstractVoiceAppState {
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState call(Socket clientSocket){
+    public AbstractVoiceAppState call(){
         System.out.println("output: ERR");
         getMachineData().getClientPrintWriter().println("ERR call");
         return new StateWaiting(machineData);

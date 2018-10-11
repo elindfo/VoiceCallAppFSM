@@ -4,12 +4,8 @@ import java.util.Scanner;
 
 public class CommandParser {
 
-    public enum CommandType{
-        INVITE, TRO, ACK, OK, END_CALL, BYE, ERR, BUSY, NONE
-    }
-
     private static String input = "";
-    private static CommandType command;
+    private static SignalType command;
     private static ArrayList<String> args;
 
     private CommandParser(){}
@@ -19,7 +15,7 @@ public class CommandParser {
             throw new IllegalArgumentException("Empty string");
         }
         input = s.toUpperCase();
-        command = CommandType.NONE;
+        command = SignalType.NONE;
         args = new ArrayList<>();
         parse();
     }
@@ -31,15 +27,15 @@ public class CommandParser {
         String[] splitInput = input.split(" ");
         //Get command
         switch(splitInput[0]){
-            case "INVITE": command = CommandType.INVITE; break;
-            case "TRO": command = CommandType.TRO; break;
-            case "ACK": command = CommandType.ACK; break;
-            case "OK": command = CommandType.OK; break;
-            case "END_CALL": command = CommandType.END_CALL; break;
-            case "BYE": command = CommandType.BYE; break;
-            case "ERR": command = CommandType.ERR; break;
-            case "BUSY": command = CommandType.BUSY; break;
-            default: command = CommandType.NONE; return;
+            case "INVITE": command = SignalType.INVITE; break;
+            case "TRO": command = SignalType.TRO; break;
+            case "ACK": command = SignalType.ACK; break;
+            case "OK": command = SignalType.OK; break;
+            case "END_CALL": command = SignalType.END_CALL; break;
+            case "BYE": command = SignalType.BYE; break;
+            case "ERR": command = SignalType.ERR; break;
+            case "BUSY": command = SignalType.BUSY; break;
+            default: command = SignalType.NONE; return;
         }
 
         //Get arguments
@@ -52,7 +48,7 @@ public class CommandParser {
         return args.size();
     }
 
-    public static CommandType getCommand(){
+    public static SignalType getCommand(){
         return command;
     }
 
