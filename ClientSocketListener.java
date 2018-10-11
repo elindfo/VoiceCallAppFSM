@@ -49,7 +49,12 @@ class ClientSocketListener extends Thread{
                     }
                     case ACK: signalQueue.poll(); handler.invokeAck(); break;
                     case OK: signalQueue.poll(); handler.invokeOk(); break;
-                    case TRO: signalQueue.poll(); handler.invokeTro(); break;
+                    case TRO: {
+                        signalQueue.poll();
+                        handler.getMachineData().setRemotePort(Integer.parseInt(CommandParser.getArgs().get(0)));
+                        handler.invokeTro();
+                        break;
+                    }
                     case BYE: signalQueue.poll(); handler.invokeBye(); break;
                     case END_CALL: signalQueue.poll(); handler.invokeEndCall(); break;
                     case ERR: signalQueue.poll(); handler.invokeErr(CommandParser.getArgs().get(0)); running = false; break;
