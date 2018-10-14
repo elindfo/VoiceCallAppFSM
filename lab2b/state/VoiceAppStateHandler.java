@@ -30,7 +30,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.bye();
     }
 
-    public synchronized void invokeCall(){
+    public synchronized void invokeCall() throws IOException {
         currentState = currentState.call();
     }
 
@@ -38,7 +38,7 @@ public class VoiceAppStateHandler {
         currentState = currentState.tro();
     }
 
-    public synchronized void invokeEndCall() throws SocketException {
+    public synchronized void invokeEndCall() throws IOException {
         currentState = currentState.endCall();
     }
 
@@ -69,5 +69,6 @@ public class VoiceAppStateHandler {
     public synchronized void reset() throws IOException {
         machineData.reset();
         currentState = new StateWaiting(machineData);
+        System.out.println("Current state: " + currentState);
     }
 }

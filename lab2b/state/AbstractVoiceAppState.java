@@ -19,42 +19,43 @@ public abstract class AbstractVoiceAppState {
 
     public AbstractVoiceAppState invite() throws IOException {
         System.out.println("output: ERR");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
     public AbstractVoiceAppState ack() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR ack");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
     public AbstractVoiceAppState bye() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR bye");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState call(){
+    public AbstractVoiceAppState call() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR call");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
     public AbstractVoiceAppState tro() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR tro");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState endCall() throws SocketException {
+    public AbstractVoiceAppState endCall() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR endCall");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
     public AbstractVoiceAppState ok() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR ok");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 

@@ -16,7 +16,7 @@ public class StateCalling extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState tro() throws IOException {
-        System.out.println("Method: tro\nState: Calling\noutsignal: ACK");
+        System.out.println("Method: tro State: Calling outsignal: ACK");
         getMachineData().getClientPrintWriter().println("ACK");
         InetAddress inetAddress = getMachineData().getClientSocket().getInetAddress();
         System.out.println("tro: initiating call with " + inetAddress.getHostAddress());

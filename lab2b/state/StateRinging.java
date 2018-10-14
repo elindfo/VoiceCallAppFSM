@@ -16,7 +16,7 @@ public class StateRinging extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState ack() throws IOException {
-        System.out.println("Method call: ack\nState: Ringing\noutsignal:");
+        System.out.println("Method call: ack State: Ringing outsignal:");
         InetAddress inetAddress = getMachineData().getClientSocket().getInetAddress();
         int port = getMachineData().getRemotePort();
         System.out.println("ack: initiating call with " + inetAddress.getHostAddress() + " on port " + port);

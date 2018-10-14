@@ -18,7 +18,7 @@ public class StateInSession extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState endCall() throws SocketException {
-        System.out.println("Method call: endCall\nState: InSession\noutsignal: BYE");
+        System.out.println("Method call: endCall State: InSession outsignal: BYE");
         getMachineData().getAudioUDPStream().stopStreaming();
         getMachineData().getAudioUDPStream().close();
         getMachineData().getClientPrintWriter().println("BYE");
@@ -28,7 +28,7 @@ public class StateInSession extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState bye() throws IOException {
-        System.out.println("Method call: bye\nState: InSession\noutsignal: OK");
+        System.out.println("Method call: bye State: InSession outsignal: OK");
         getMachineData().getAudioUDPStream().stopStreaming();
         getMachineData().getAudioUDPStream().close();
         getMachineData().getClientPrintWriter().println("OK");

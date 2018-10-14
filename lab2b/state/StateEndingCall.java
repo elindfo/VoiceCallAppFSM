@@ -15,7 +15,7 @@ public class StateEndingCall extends AbstractBusyState{
 
     @Override
     public AbstractVoiceAppState ok() throws IOException {
-        System.out.println("Method call: ok\nState: EndingCall\noutsignal:");
+        System.out.println("Method call: ok State: EndingCall outsignal:");
         getMachineData().reset();
         return new StateWaiting(getMachineData());
     }

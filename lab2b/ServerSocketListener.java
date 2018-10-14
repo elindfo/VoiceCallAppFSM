@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class ServerSocketListener extends Thread{
 
@@ -16,13 +17,17 @@ class ServerSocketListener extends Thread{
     private AtomicBoolean isFree;
     private Socket currentClient;
     private Queue<SignalType> signalQueue;
+    private boolean normalMode;
+    private AtomicInteger testCase;
 
-    public ServerSocketListener(Socket currentClient, VoiceAppStateHandler handler, int port, Queue<SignalType> signalQueue, AtomicBoolean isFree){
+    public ServerSocketListener(Socket currentClient, VoiceAppStateHandler handler, int port, Queue<SignalType> signalQueue, AtomicBoolean isFree, boolean normalMode, AtomicInteger testCase){
         this.handler = handler;
         this.port = port;
         this.isFree = isFree;
         this.currentClient = currentClient;
         this.signalQueue = signalQueue;
+        this.normalMode = normalMode;
+        this.testCase = testCase;
     }
 
     @Override
@@ -40,8 +45,9 @@ class ServerSocketListener extends Thread{
                 }
                 else{
                     currentClient = clientSocket;
+                    currentClient.setSoTimeout(Main.SOCKET_TIMEOUT);
                     handler.getMachineData().setClientSocket(currentClient);
-                    new ClientSocketListener(handler, currentClient, signalQueue, isFree).start();
+                    new ClientSocketListener(handler, currentClient, signalQueue, isFree, normalMode, testCase).start();
                 }
 
             }while(true);
