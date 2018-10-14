@@ -1,9 +1,6 @@
 package lab2b.state;
 
-//TODO Fixa errorhantering, t.ex. om man skickar ACK från fel tillstånd.
-
 import java.io.IOException;
-import java.net.Socket;
 import java.net.SocketException;
 
 public abstract class AbstractVoiceAppState {

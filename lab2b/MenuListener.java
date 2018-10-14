@@ -1,6 +1,5 @@
 package lab2b;
 
-import lab2b.state.VoiceAppState;
 import lab2b.state.VoiceAppStateHandler;
 
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MenuListener extends Thread{
@@ -75,7 +73,7 @@ public class MenuListener extends Thread{
                     if(signalQueue.peek() == SignalType.INVITE){
                         signalQueue.poll();
                         try {
-                            handler.invokeInvite(currentClient);
+                            handler.invokeInvite();
                             isFree.set(true);
                         } catch (IOException e) {
                             System.err.println("Unable to answer");
@@ -104,7 +102,6 @@ public class MenuListener extends Thread{
                             }
                         }
                     }
-
                 }
             }
         }while(data != 0);

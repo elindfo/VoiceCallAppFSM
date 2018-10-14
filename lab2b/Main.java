@@ -2,21 +2,12 @@ package lab2b;
 
 import lab2b.state.VoiceAppState;
 import lab2b.state.VoiceAppStateHandler;
-import sun.misc.Signal;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-//TODO Skapa en kö till menyhanteraren. Svara finns i menyn, men får ingen effekt så länge det inte ligger någon invite i kön.
 
 public class Main {
 

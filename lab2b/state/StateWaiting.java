@@ -1,8 +1,5 @@
 package lab2b.state;
 
-import java.io.IOException;
-import java.net.Socket;
-
 public class StateWaiting extends AbstractVoiceAppState{
 
     public StateWaiting(MachineData machineData) {

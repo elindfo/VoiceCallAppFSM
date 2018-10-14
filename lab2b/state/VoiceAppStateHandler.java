@@ -1,7 +1,6 @@
 package lab2b.state;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.SocketException;
 
 public class VoiceAppStateHandler {
@@ -19,55 +18,55 @@ public class VoiceAppStateHandler {
         }
     }
 
-    public void invokeInvite(Socket clientSocket) throws IOException {
+    public synchronized void invokeInvite() throws IOException {
         currentState = currentState.invite();
     }
 
-    public void invokeAck() throws IOException {
+    public synchronized void invokeAck() throws IOException {
         currentState = currentState.ack();
     }
 
-    public void invokeBye() throws IOException {
+    public synchronized void invokeBye() throws IOException {
         currentState = currentState.bye();
     }
 
-    public void invokeCall(){
+    public synchronized void invokeCall(){
         currentState = currentState.call();
     }
 
-    public void invokeTro() throws IOException {
+    public synchronized void invokeTro() throws IOException {
         currentState = currentState.tro();
     }
 
-    public void invokeEndCall() throws SocketException {
+    public synchronized void invokeEndCall() throws SocketException {
         currentState = currentState.endCall();
     }
 
-    public void invokeOk() throws IOException {
+    public synchronized void invokeOk() throws IOException {
         currentState = currentState.ok();
     }
 
-    public boolean invokeIsBusy(){
+    public synchronized boolean invokeIsBusy(){
         return currentState.isBusy();
     }
 
-    public void invokeErr(String m) throws IOException {
+    public synchronized void invokeErr(String m) throws IOException {
         currentState = currentState.err(m);
     }
 
-    public void invokeBusy() throws IOException {
+    public synchronized void invokeBusy() throws IOException {
         currentState = currentState.busy();
     }
 
-    public VoiceAppState getCurrentState(){
+    public synchronized VoiceAppState getCurrentState(){
         return currentState.getState();
     }
 
-    public MachineData getMachineData(){
+    public synchronized MachineData getMachineData(){
         return machineData;
     }
 
-    public void reset() throws IOException {
+    public synchronized void reset() throws IOException {
         machineData.reset();
         currentState = new StateWaiting(machineData);
     }

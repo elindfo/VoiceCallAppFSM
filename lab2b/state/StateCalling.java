@@ -2,7 +2,6 @@ package lab2b.state;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
 
 public class StateCalling extends AbstractBusyState{
 
