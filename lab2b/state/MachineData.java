@@ -1,4 +1,6 @@
-package state;
+package lab2b.state;
+
+import lab2b.AudioStreamUDP;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +9,8 @@ import java.net.Socket;
 public class MachineData {
 
     private Socket clientSocket;
+    private AudioStreamUDP audioUDPStream;
+    private int remotePort;
     private PrintWriter out;
 
     public MachineData(){
@@ -25,7 +29,23 @@ public class MachineData {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
     }
 
-    public void reset(){
+    public void setRemotePort(int port){
+        remotePort = port;
+    }
+
+    public int getRemotePort(){
+        return remotePort;
+    }
+
+    public AudioStreamUDP getAudioUDPStream(){
+        return audioUDPStream;
+    }
+
+    public void setAudioUDPStream(AudioStreamUDP audioUDPStream){
+        this.audioUDPStream = audioUDPStream;
+    }
+
+    public void reset() throws IOException {
         if(out != null){
             out.close();
         }
@@ -36,5 +56,7 @@ public class MachineData {
                 System.err.println("Unable to close clientSocket");
             }
         }
+        remotePort = 0;
+        audioUDPStream = new AudioStreamUDP();
     }
 }

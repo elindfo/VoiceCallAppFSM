@@ -1,7 +1,7 @@
-package state;
+package lab2b.state;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.net.SocketException;
 
 public class VoiceAppStateHandler {
 
@@ -18,51 +18,57 @@ public class VoiceAppStateHandler {
         }
     }
 
-    public void invokeInvite(Socket clientSocket) throws IOException {
-        currentState = currentState.invite(clientSocket);
+    public synchronized void invokeInvite() throws IOException {
+        currentState = currentState.invite();
     }
 
-    public void invokeAck(){
+    public synchronized void invokeAck() throws IOException {
         currentState = currentState.ack();
     }
 
-    public void invokeBye(){
+    public synchronized void invokeBye() throws IOException {
         currentState = currentState.bye();
     }
 
-    public void invokeCall(Socket clientSocket){
-        currentState = currentState.call(clientSocket);
+    public synchronized void invokeCall() throws IOException {
+        currentState = currentState.call();
     }
 
-    public void invokeTro(){
+    public synchronized void invokeTro() throws IOException {
         currentState = currentState.tro();
     }
 
-    public void invokeEndCall() {
+    public synchronized void invokeEndCall() throws IOException {
         currentState = currentState.endCall();
     }
 
-    public void invokeOk(){
+    public synchronized void invokeOk() throws IOException {
         currentState = currentState.ok();
     }
 
-    public boolean invokeIsBusy(){
+    public synchronized boolean invokeIsBusy(){
         return currentState.isBusy();
     }
 
-    public void invokeErr(String m){
+    public synchronized void invokeErr(String m) throws IOException {
         currentState = currentState.err(m);
     }
 
-    public void invokeBusy(){
+    public synchronized void invokeBusy() throws IOException {
         currentState = currentState.busy();
     }
 
-    public VoiceAppState getCurrentState(){
+    public synchronized VoiceAppState getCurrentState(){
         return currentState.getState();
     }
 
-    public MachineData getMachineData(){
+    public synchronized MachineData getMachineData(){
         return machineData;
+    }
+
+    public synchronized void reset() throws IOException {
+        machineData.reset();
+        currentState = new StateWaiting(machineData);
+        System.out.println("Current state: " + currentState);
     }
 }

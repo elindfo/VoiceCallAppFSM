@@ -1,4 +1,4 @@
-package state;
+package lab2b.state;
 
 public abstract class AbstractBusyState extends AbstractVoiceAppState{
 

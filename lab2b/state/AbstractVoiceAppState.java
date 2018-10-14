@@ -1,9 +1,7 @@
-package state;
-
-//TODO Fixa errorhantering, t.ex. om man skickar ACK från fel tillstånd.
+package lab2b.state;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.net.SocketException;
 
 public abstract class AbstractVoiceAppState {
 
@@ -19,54 +17,55 @@ public abstract class AbstractVoiceAppState {
 
     public abstract VoiceAppState getState();
 
-    public AbstractVoiceAppState invite(Socket clientSocket) throws IOException {
+    public AbstractVoiceAppState invite() throws IOException {
         System.out.println("output: ERR");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState ack(){
+    public AbstractVoiceAppState ack() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR ack");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState bye(){
+    public AbstractVoiceAppState bye() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR bye");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState call(Socket clientSocket){
+    public AbstractVoiceAppState call() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR call");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState tro(){
+    public AbstractVoiceAppState tro() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR tro");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState endCall(){
+    public AbstractVoiceAppState endCall() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR endCall");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState ok(){
+    public AbstractVoiceAppState ok() throws IOException {
         System.out.println("output: ERR");
-        getMachineData().getClientPrintWriter().println("ERR ok");
+        getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState err(String m){
+    public AbstractVoiceAppState err(String m) throws IOException {
         System.out.println("ERR received. Message: " + m);
         getMachineData().reset();
         return new StateWaiting(machineData);
     }
 
-    public AbstractVoiceAppState busy(){
+    public AbstractVoiceAppState busy() throws IOException {
         System.out.println("Server: BUSY");
         getMachineData().reset();
         return new StateWaiting(machineData);
